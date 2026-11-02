@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111210">
+    <meta name="description" content="Un catálogo público de música, documentos, imágenes y juegos.">
+    <title>Mi espacio — biblioteca pública</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Mi espacio, inicio">
+          <span class="brand-mark" aria-hidden="true">m</span>
+          <span>mi espacio</span>
+        </a>
+
+        <p class="nav-label">BIBLIOTECA PÚBLICA</p>
+        <nav class="primary-nav" aria-label="Biblioteca">
+          <button class="nav-item is-active" data-category="music" type="button" aria-label="Música">
+            <span class="nav-icon" aria-hidden="true">♫</span><span>Música</span><span class="nav-count" data-count="music">0</span>
+          </button>
+          <button class="nav-item" data-category="documents" type="button" aria-label="Documentos">
+            <span class="nav-icon nav-icon-doc" aria-hidden="true">▤</span><span>Documentos</span><span class="nav-count" data-count="documents">0</span>
+          </button>
+          <button class="nav-item" data-category="games" type="button" aria-label="Juegos">
+            <span class="nav-icon nav-icon-game" aria-hidden="true">⌘</span><span>Juegos</span><span class="nav-count" data-count="games">0</span>
+          </button>
+          <button class="nav-item" data-category="images" type="button" aria-label="Imágenes">
+            <span class="nav-icon" aria-hidden="true">▧</span><span>Imágenes</span><span class="nav-count" data-count="images">0</span>
+          </button>
+          <button class="nav-item" data-category="other" type="button" aria-label="Otros">
+            <span class="nav-icon" aria-hidden="true">◈</span><span>Otros</span><span class="nav-count" data-count="other">0</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="private-note public-note">
+            <span class="private-icon" aria-hidden="true">◎</span>
+            <div>
+              <strong>Visible para todos</strong>
+              <p>El contenido publicado aquí es público.</p>
+            </div>
+          </div>
+          <p class="sidebar-caption">HECHO PARA COMPARTIR <span aria-hidden="true">✳</span></p>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Biblioteca pública</span><span class="breadcrumb-separator">/</span><strong id="breadcrumb-current">Música</strong></div>
+          <div class="topbar-actions">
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <span class="visually-hidden">Buscar en la biblioteca</span>
+              <input id="search-input" type="search" placeholder="Buscar en la biblioteca" autocomplete="off">
+              <kbd>/</kbd>
+            </label>
+            <span class="public-badge">PÚBLICA</span>
+          </div>
+        </header>
+
+        <section class="content">
+          <div class="welcome-row">
+            <div>
+              <p class="eyebrow"><span class="live-dot"></span> UN RINCÓN DIGITAL PARA TODOS</p>
+              <h1 id="page-title">Tu música, <span>a tu manera.</span></h1>
+              <p class="page-description" id="page-description">Escucha y comparte descubrimientos musicales.</p>
+            </div>
+            <button class="button button-primary" id="open-add" type="button">
+              <span class="button-plus" aria-hidden="true">+</span> Proponer contenido
+            </button>
+          </div>
+
+          <section class="hero-card" aria-label="Resumen de la biblioteca">
+            <div class="hero-copy">
+              <span class="hero-kicker">UNA COLECCIÓN PARA COMPARTIR</span>
+              <h2>Un espacio para<br>todo lo que <em>nos mueve.</em></h2>
+              <p>Música, archivos y descubrimientos que cualquiera puede ver.</p>
+              <button class="hero-link" id="hero-add" type="button">Proponer contenido <span aria-hidden="true">↗</span></button>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="record"><div class="record-label"><span>mi<br>mix</span></div></div>
+              <span class="spark spark-one">✳</span>
+              <span class="spark spark-two">✦</span>
+              <span class="art-caption">SIDE A — US</span>
+            </div>
+            <span class="hero-index" aria-hidden="true">01 / 03</span>
+          </section>
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow section-eyebrow" id="section-eyebrow">DESCUBRE</p>
+              <h2 id="section-title">Música para escuchar <span class="heading-spark" aria-hidden="true">✳</span></h2>
+            </div>
+            <span class="item-total" id="item-total">0 elementos</span>
+          </div>
+
+          <section id="library-view" class="library-view" aria-live="polite"></section>
+          <p id="storage-note" class="storage-note">Este catálogo es público. Todos pueden ver el contenido publicado.</p>
+        </section>
+      </main>
+    </div>
+
+    <section class="player" id="player" aria-label="Reproductor de música" hidden>
+      <div class="player-track">
+        <div class="player-art" aria-hidden="true">♫</div>
+        <div class="player-track-copy"><strong id="player-title">—</strong><span>Biblioteca pública</span></div>
+      </div>
+      <audio id="audio-player" controls preload="metadata"></audio>
+      <iframe id="youtube-player" title="Reproductor de YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen hidden></iframe>
+      <button class="player-close" id="close-player" type="button" aria-label="Cerrar reproductor">×</button>
+    </section>
+
+    <dialog class="add-dialog" id="add-dialog" aria-labelledby="dialog-title">
+      <section class="dialog-card">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">PROPUESTA PÚBLICA</p>
+            <h2 id="dialog-title">Sugiere algo para compartir</h2>
+          </div>
+          <button class="dialog-close" id="close-dialog" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <p class="guide-description">Comparte un enlace público. Revisaré la propuesta antes de publicarla. Para archivos, pega un enlace de descarga; este formulario no sube archivos.</p>
+        <form id="suggestion-form">
+          <label class="field-label" for="suggestion-category">¿Qué quieres compartir?</label>
+          <select class="field-control" id="suggestion-category" name="category" required>
+            <option value="Música">Música</option>
+            <option value="Imagen">Imagen</option>
+            <option value="Documento">Documento</option>
+            <option value="Juego">Juego</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <label class="field-label" for="suggestion-title">Nombre</label>
+          <input class="field-control" id="suggestion-title" name="title" type="text" maxlength="100" required placeholder="Nombre de la canción o archivo">
+          <label class="field-label" for="suggestion-url">Enlace</label>
+          <input class="field-control" id="suggestion-url" name="url" type="url" inputmode="url" maxlength="2000" required placeholder="https://...">
+          <label class="field-label" for="suggestion-note">Nota <span class="field-optional">(opcional)</span></label>
+          <textarea class="field-control suggestion-note" id="suggestion-note" name="note" maxlength="500" placeholder="¿Por qué te gustaría compartirlo?"></textarea>
+          <p class="form-error" id="suggestion-error" role="alert" hidden></p>
+          <p class="field-hint">Solo envía enlaces que tengas permiso para compartir. Si se aprueba, el contenido será público. No incluyas información personal. El formulario prepara un correo; nada se envía hasta que tú pulses «Enviar» en tu aplicación.</p>
+          <p class="suggestion-status" id="suggestion-status" role="status" hidden></p>
+          <div class="dialog-actions">
+            <button class="button button-quiet" id="cancel-suggestion" type="button">Cancelar</button>
+            <button class="button button-primary" id="prepare-suggestion" type="submit">Preparar propuesta</button>
+            <a class="button button-primary email-draft-link" id="email-draft-link" hidden>Abrir correo para enviar ↗</a>
+          </div>
+        </form>
+      </section>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
